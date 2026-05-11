@@ -23,4 +23,6 @@ def train_linear_regression(X: pd.DataFrame, y: pd.Series):
 
     y_pred = model.predict(X_test_scaled)
 
-    return model, scaler, y_test, y_pred
+    test_indices = X_test.index
+
+    return model, scaler, y_test, y_pred, test_indices
