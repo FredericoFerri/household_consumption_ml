@@ -46,6 +46,46 @@ def plot_linear_regression(df: pd.DataFrame):
 
     plt.show()
 
+def plot_predicted_vs_actual(y_test, y_pred, label="Linear Regression"):
+    y_test_vals = y_test.values if hasattr(y_test, "values") else y_test
+
+    plt.figure(figsize=(8, 6))
+    plt.scatter(y_test_vals, y_pred, alpha=0.3, s=10, color="steelblue", label="Predictions")
+
+    min_val = min(y_test_vals.min(), y_pred.min())
+    max_val = max(y_test_vals.max(), y_pred.max())
+    plt.plot([min_val, max_val], [min_val, max_val], color="red", linewidth=2, label="Perfect fit")
+
+    plt.xlabel("Actual Energy Requested From Grid (kW)")
+    plt.ylabel("Predicted Energy Requested From Grid (kW)")
+    plt.title(f"Predicted vs Actual — {label}")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+def plot_residuals(y_test, y_pred, label="Linear Regression"):
+    y_test_vals = y_test.values if hasattr(y_test, "values") else y_test
+    residuals = y_test_vals - y_pred
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    # Residuals vs Predicted
+    axes[0].scatter(y_pred, residuals, alpha=0.3, s=10, color="steelblue")
+    axes[0].axhline(0, color="red", linewidth=2)
+    axes[0].set_xlabel("Predicted (kW)")
+    axes[0].set_ylabel("Residual (kW)")
+    axes[0].set_title(f"Residuals vs Predicted — {label}")
+
+    # Residuals distribution
+    axes[1].hist(residuals, bins=60, color="steelblue", edgecolor="white")
+    axes[1].axvline(0, color="red", linewidth=2)
+    axes[1].set_xlabel("Residual (kW)")
+    axes[1].set_ylabel("Frequency")
+    axes[1].set_title(f"Residuals Distribution — {label}")
+
+    plt.tight_layout()
+    plt.show()
+
 def evaluate_model(y_test, y_pred, label="Dataset"):
     mae = mean_absolute_error(y_test, y_pred)
     rmse = mean_squared_error(y_test, y_pred) ** 0.5
@@ -54,7 +94,7 @@ def evaluate_model(y_test, y_pred, label="Dataset"):
     print(f"\n--- {label} ---")
     print("MAE:", mae)
     print("RMSE:", rmse)
-    print("R²:", r2)
+    print("R_2:", r2)
 
 def evaluate_both_regimes(y_test, y_pred, test_indices, df: pd.DataFrame):
 

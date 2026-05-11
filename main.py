@@ -5,7 +5,7 @@ from src.data.preprocess import preprocess_features
 
 from src.models.train_linear_regression import train_linear_regression
 from src.models.train_random_forest import train_random_forest
-from src.models.evaluate import evaluate_model, evaluate_both_regimes
+from src.models.evaluate import evaluate_model, evaluate_both_regimes, plot_residuals, plot_predicted_vs_actual
 
 from sklearn.model_selection import cross_val_score
 
@@ -38,7 +38,11 @@ def main():
     print("\nCross-validation results:")
     scores_lr = cross_val_score(model_lr, X, y, cv=5, scoring="r2")
     print(scores_lr)
-    print("Mean R²:", scores_lr.mean())
+    print("Mean R_2:", scores_lr.mean())
+
+    # Plottings for 
+    #plot_predicted_vs_actual(y_test_lr, y_pred_lr, label="Linear Regression")
+    #plot_residuals(y_test_lr, y_pred_lr, label="Linear Regression")
 
     # --- Linear Regression: only central heating (leakage check) ---
     print("\n========== Linear Regression — Central Heating only ==========")

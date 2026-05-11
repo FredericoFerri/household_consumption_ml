@@ -27,7 +27,7 @@ def train_random_forest(X: pd.DataFrame, y: pd.Series):
     cv_scores = cross_val_score(model, X, y, cv=kf, scoring="r2", n_jobs=-1)
     print("\nCross-validation results:")
     print(cv_scores)
-    print(f"Mean R²: {cv_scores.mean()}")
+    print(f"Mean R_2: {cv_scores.mean()}")
 
     # --- Feature importances ---
     importances = pd.DataFrame({
